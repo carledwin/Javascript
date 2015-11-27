@@ -1,5 +1,19 @@
 	
-		/* captura o elemento HTML da pagina a partir do ID e retorna o seu conteudo interno a partir da propriedade innerHTML*/
+/*executa ações ao carregar a janela*/
+	window.onload = onDocumentLoad;	
+
+	/*verifica se existe mudança nos inputs */
+function onDocumentLoad(){
+		var textEdits = document.getElementsByClassName("quantity");
+		
+		for(var i = 0; i < textEdits.length; i++){
+			textEdits[i].onchange = quantidadeMudou;
+		}
+	}
+
+
+
+	/* captura o elemento HTML da pagina a partir do ID e retorna o seu conteudo interno a partir da propriedade innerHTML*/
 		var total = document.getElementById("total");
 		//alert("Conteudo recuperado do elemento HTML a partir da propriedade innerHTML: " + total.innerHTML);
 		
@@ -57,7 +71,7 @@
 			var valueCasasDecimais = text.substr(-2); //captura as duas ultimas posicoes da string
 			//valueCasasDecimais++;
 			
-			text =  valueTruncado + "," + valueCasasDecimais;
+			text = "R$ " + valueTruncado + "," + valueCasasDecimais;
 			return text;
 		}
 		
@@ -121,11 +135,11 @@
 		
 		console.debug("Passou por aqui");
 		
-		function getPrice(){
-			var totall = 0;
+		function calculateTotalProducts(produtosArray){
+			var totalProdutos = 0;
 			var count=0;
-			for(var pos= 0; pos < produtos.length; pos++){
-				var priceElements = produtos[pos].getElementsByClassName("price");
+			for(var pos= 0; pos < produtosArray.length; pos++){
+				var priceElements = produtosArray[pos].getElementsByClassName("price");
 				var priceText = priceElements[0].innerHTML;
 				var price = moneyTextToFloat(priceText);
 				
@@ -137,12 +151,39 @@
 				var qtyText = qtyElements[0].value;
 				//console.log(qtyText);
 				var qty = moneyTextToFloat(qtyText);
-				//console.log(qty);
-				console.log(count +"- produto - " + price + " qtd: " + qty);
 				
-				totall = totall + price;
+				var subTotal = qty * price;
+				
+				//console.log(qty);
+				
+				console.log(count +"- produto - " + price + " qtd: " + qty + " subtotal: " + subTotal);
+				
+				totalProdutos += subTotal; 
+				
+				total  = writeTotal(totalProdutos);
 			}
-			console.log("Total: " + totall);
+			//console.log("Total: " + totalProdutos);
+			
+			return totalProdutos;
 		}
 		
-		getPrice(produtos);
+				
+		
+		console.debug("Total: " + calculateTotalProducts(produtos));
+
+		
+		/* function que atualiza o valor total do carrinho*/
+		function quantidadeMudou(){
+			writeTotal(calculateTotalProducts(produtos));
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
