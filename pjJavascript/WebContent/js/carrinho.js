@@ -4,11 +4,43 @@
 
 	/*verifica se existe mudança nos inputs */
 function onDocumentLoad(){
-		var textEdits = document.getElementsByClassName("quantity");
+	
+	
+	
+	
+	
+	
+	if(document.getElementsByClassName != undefined){
+				
+			var textEdits = document.getElementsByClassName("quantity");
 		
-		for(var i = 0; i < textEdits.length; i++){
-			textEdits[i].onchange = quantidadeMudou;
+			for(var i = 0; i < textEdits.length; i++){
+				textEdits[i].onchange = quantidadeMudou;
+			}
+		alert("getElementsByClassName encontrada.");
+	}else{
+		document.getElementsByClassName = function(className){
+			
+			var todosElementos = document.getElementsByTagName("*");
+			var resultados = [];
+			var elemento;
+			
+			for (var i = 0; (elemento = todosElementos[i]) != null; i++){
+				var elementoClass = elemento.className;
+				if(elementoClass && elementoClass.indexOf(className) != -1){
+					resultados.push(elemento);
+					console.log("Elemento -->" + elemento);
+					console.log("inner -->" + elemento.innerHTML);
+				}
+			}
+			alert("Regozijai-vos, usuarios de Internet Explorer.");
+			
+			return resultados;
 		}
+	}
+	
+	
+		
 	}
 
 
