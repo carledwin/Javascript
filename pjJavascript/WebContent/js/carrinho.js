@@ -1,3 +1,4 @@
+/*******************************jQuery ********************************/
 	
 /*executa ações ao carregar a janela*/
 	window.onload = onDocumentLoad;	
@@ -5,7 +6,7 @@
 	/*verifica se existe mudança nos inputs */
 function onDocumentLoad(){
 	
-	
+	executeJQuery();
 	
 	
 	
